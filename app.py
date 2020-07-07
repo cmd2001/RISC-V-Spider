@@ -27,34 +27,31 @@ def square(a):
 def updateFigure():
     fig, ax = plt.subplots(1, figsize=(9, 4))
 
-    tot = int(time.strftime('%W', time.localtime()))
+    tot = int(time.strftime('%d', time.localtime()))
     xt = []
     yt = []
-    for i in range(tot):
+    for i in range(tot + 1):
         yt += [0]
         xt += [i]
     for i in res:
-        y = []
-        for _ in range(tot):
-            y += [0]
+        y = [0 for _ in range(tot + 1)]
         for itm in i[1]:
-            t = int(time.strftime('%W', time.strptime(itm[0: 19], '%Y-%m-%d %H:%M:%S'))) - 1
+            t = int(time.strftime('%d', time.strptime(itm[0: 19], '%Y-%m-%d %H:%M:%S')))
             y[t] += 1
         y = square(y)
-        for j in range(tot):
+        for j in range(tot + 1):
             yt[j] += y[j]
-        ax.fill_between(xt, y, 0,
-                 facecolor="orange", 
-                 color='orange',       
-                 alpha=0.1)         
-
-    ax.plot(xt, yt, 'b-', label='sum of sqrt')
-    ax.set_ylabel('square root of commit numbers')
-    ax.set_xlabel('week number in 2020')
+        ax.fill_between(xt[1:], y[1:], 0,
+                 facecolor="orange",
+                 color='orange',
+                 alpha=0.1)
+    ax.plot(xt[1:], yt[1:], 'b-', label='Sum of Sqrt')
+    ax.set_ylabel('Square Root of Commit Numbers')
+    ax.set_xlabel('Date Number in July 2020')
     ax.set_title('Commit Statistics')
     ax.legend()
 
-    fig.savefig('static/graph.png',dpi=300,format='png')
+    fig.savefig('static/graph.png',dpi=800,format='png')
 
     del fig
     del ax
@@ -81,18 +78,23 @@ def update():
     updateFigure()
     gc.collect()
 
-    time.sleep(60)
+    time.sleep(600) # collect data every 10 minutes.
 
 def backend():
     while True:
         update()
 
 @app.route('/')
-def hello_world():
+def root():
     # with open()
     return render_template('index.html', res=res, time=t)
+
+@app.errorhandler(500)
+def error(e):
+    return "Collecting Data! Please Wait."
 
 _thread.start_new_thread(backend, ())
 if __name__ == '__main__':
     t = datetime.datetime.now()
-    app.run(host='0.0.0.0', port=80)
+    # app.run(host='0.0.0.0', port=80)
+    app.run()

@@ -15,10 +15,10 @@
 		<link rel="apple-touch-icon" href="{{ url_for('static', filename='icon.jpeg') }}">
 		{% block head %} {% endblock %}
 	</head>
-	<body class="mdui-theme-primary-deep-purple mdui-theme-accent-deep-purple">
+	<body class="mdui-theme-primary-indigo mdui-theme-accent-indigo">
 
 		<div class="mdui-toolbar mdui-color-theme">
-			<span class="mdui-typo-title">Compiler Spider</span>
+			<span class="mdui-typo-title">RISC-V Spider</span>
 			<div class="mdui-toolbar-spacer"></div>
 		</div>
 
@@ -55,7 +55,7 @@
 				{% endfor %}
 
 				<div class="mdui-typo">
-					<p>Last updated: {{ time }}</p>
+					<p>Automatically Update Every 10 Minutes.<br>Last Updated: {{ time }}</p>
 				</div>
 
 				<footer>
