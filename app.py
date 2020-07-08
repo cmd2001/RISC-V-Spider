@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 a = []
 res = []
+flag = True
 
 def hs(s):
     res = 0
@@ -57,19 +58,22 @@ def updateFigure():
     del ax
 
 def update():
-    global a, res, t
+    global a, res, t, flag
+    flag = True
     with open('urls.txt', 'r') as f:
         a = f.read().split('\n')
         a.remove('')
     _res = []
     for url in a:
+        if url == '' or url[0] == '#':
+            continue;
         h = hs(url)
         if not os.path.exists(h):
             os.system('mkdir ' + h + '; cd ' + h + '; git clone ' + url + r';')
         os.system('cd ' + h + r'/*; git fetch --all; git reset --hard origin/master; git pull; git log --pretty=format:"%ad: %s" --date=format:"%Y-%m-%d %H:%M:%S" > ../log.txt')
         with open(h + r'/log.txt', 'r') as f:
             _res.append((url, f.read().split('\n')))
-    t = datetime.datetime.now()
+    t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     res = sorted(_res, key=byStr)
     res.reverse()
     
@@ -78,6 +82,7 @@ def update():
     updateFigure()
     gc.collect()
 
+    flag = False
     time.sleep(600) # collect data every 10 minutes.
 
 def backend():
@@ -86,15 +91,13 @@ def backend():
 
 @app.route('/')
 def root():
-    # with open()
+    if flag:
+        return render_template('error.html')
     return render_template('index.html', res=res, time=t)
 
-@app.errorhandler(500)
-def error(e):
-    return "Collecting Data! Please Wait."
 
 _thread.start_new_thread(backend, ())
+
 if __name__ == '__main__':
-    t = datetime.datetime.now()
-    # app.run(host='0.0.0.0', port=80)
-    app.run()
+    t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    app.run(host='0.0.0.0', port=5000)
