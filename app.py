@@ -95,9 +95,9 @@ def root():
         return render_template('error.html')
     return render_template('index.html', res=res, time=t)
 
-
 _thread.start_new_thread(backend, ())
 
 if __name__ == '__main__':
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    app.run(host='0.0.0.0', port=5000)
+    # app.run(host='0.0.0.0', port=5000)
+    app.run()
