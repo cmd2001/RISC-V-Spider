@@ -5,4 +5,8 @@ https://github.com/Pioooooo/RISC-V
 https://github.com/RebeccaPan/RISC-V-Simulator
 https://github.com/brandon-yan/RISC-V-simulator
 https://github.com/Icefoxzhx/RISCV-Simulator
+https://github.com/stneng/RISCV-simulator
+https://github.com/wtl666wtl/RISC_V-Sim
+https://github.com/BarrinXu/RISC-V-Simulator
+https://github.com/IvyCharon/RISCV-Simulation
 # https://github.com/battlin6/RISC-V
