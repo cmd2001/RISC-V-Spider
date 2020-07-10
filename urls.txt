@@ -11,4 +11,5 @@ https://github.com/BarrinXu/RISC-V-Simulator
 https://github.com/IvyCharon/RISCV-Simulation
 https://github.com/XOR-op/RISC-V-simulator
 https://github.com/jlhsmall/rescv
+https://github.com/aik2mlj/RISC-V-Simulator
 # https://github.com/battlin6/RISC-V
